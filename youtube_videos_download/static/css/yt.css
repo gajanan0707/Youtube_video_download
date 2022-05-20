@@ -1,0 +1,97 @@
+.title {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 5%;
+    font-family: 'CircularStd', sans-serif;
+}
+.downloadbox {
+    padding-left: 100px;
+    padding-right: 100px;
+    display: flex;
+    margin-top: 3%;
+}
+
+.v-title {
+    color: #960FF2;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'CircularStd', sans-serif;
+}
+
+.downloadbox > .img-thumb {
+    padding-right: 10px;
+}
+
+.downloadbox > .img-thumb > img {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+.downloadbox > .v-about {
+    padding-left: 10px;
+}
+
+.downloadbox > .v-about > .infos {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-top: 25px;
+}
+
+.downloadbox > .v-about > .infos > li {
+    list-style: none;
+    padding-right: 50px;
+    font-size: 18px;
+    font-family: 'CircularStd';
+    color: #480773;
+}
+
+.downloads {
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 5%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'CircularStd';
+
+}
+
+th, td {
+    text-align: left;
+    padding: 15px;
+}
+
+th {
+    background-color: #00B98E;
+    color: white;
+}
+
+#m-show {
+    display: none;
+}
+
+@media screen and (max-width: 500px) {
+    .downloadbox, .downloads {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .downloadbox > .img-thumb > img {
+        width: 100% !important;
+    }
+
+    #desl {
+        display: none;
+    }
+
+    #m-show {
+        display: block;
+    }
+}

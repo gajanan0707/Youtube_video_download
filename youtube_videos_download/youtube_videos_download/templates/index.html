@@ -1,0 +1,393 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <title>Youtube Video Download</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicon -->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+              rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/yt.css' %}" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </head>
+{% endblock head %}
+
+<body>
+<div class="container-xxl bg-white p-0">
+    <!-- Spinner Start -->
+    <div id="spinner"
+         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    {% block navbar %}
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="m-0">Download YT Videos</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                        {#                    <a href="about.html" class="nav-item nav-link">About</a>#}
+                        {#                    <a href="service.html" class="nav-item nav-link">Service</a>#}
+                        {#                    <div class="nav-item dropdown">#}
+                        {#                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>#}
+                        {#                        <div class="dropdown-menu m-0">#}
+                        {#                            <a href="feature.html" class="dropdown-item">Features</a>#}
+                        {#                            <a href="quote.html" class="dropdown-item">Free Quote</a>#}
+                        {#                            <a href="team.html" class="dropdown-item">Our Team</a>#}
+                        {#                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>#}
+                        {#                            <a href="404.html" class="dropdown-item">404 Page</a>#}
+                        {#                        </div>#}
+                        {#                    </div>#}
+                        <a href="{% url 'contact_us' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="" class="btn btn-light rounded-pill text-primary py-2 px-4 ms-lg-5">Free Quote</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl bg-primary hero-header">
+                <div class="container">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <h1 class="text-white mb-4 animated zoomIn">We Help To Download Your Favourite YouTube
+                                Video</h1>
+                            <p class="text-white pb-3 animated zoomIn">You just need copy youtube video link and paster
+                                here and select your resolution</p>
+                            <a href=""
+                               class="btn btn-outline-light rounded-pill border-2 py-3 px-5 animated slideInRight">Learn
+                                More</a>
+                        </div>
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <img class="img-fluid animated zoomIn" src="{% static 'img/hero.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+    {% endblock navbar %}
+
+    {% block content %}
+        <!-- YouTube Link Form Start -->
+        <div class="container-xxl py-6">
+            <div class="container">
+                <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <div class="d-inline-block border rounded-pill text-primary px-4 mb-3">Youtube Link</div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.3s">
+                        <form id="youtube_url_form" method="POST">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control" placeholder="Paste your youtube video link"
+                                               id="yt_link" style="height: 54px" required></input>
+                                        <label for="yt_link">Youtube Link</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Download</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- YouTube Link Form End -->
+        <div class="downloads">
+            <div class="main">
+                <div class="youtube_modal" , id="youtube_modal">
+                </div>
+                <br>
+
+                <div class="downloads" id="youtube_description">
+                </div>
+            </div>
+        </div>
+        </div>
+    {% endblock %}
+
+<!-- Team Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <div class="d-inline-block border rounded-pill text-primary px-4 mb-3">Our Team</div>
+            <h2 class="mb-5">Meet Our Team Members</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item">
+                    <h5>Full Name</h5>
+                    <p class="mb-4">Designation</p>
+                    <img class="img-fluid rounded-circle w-100 mb-4" src="{% static 'img/team-1.jpg' %}" alt="">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="team-item">
+                    <h5>Full Name</h5>
+                    <p class="mb-4">Designation</p>
+                    <img class="img-fluid rounded-circle w-100 mb-4" src="{% static 'img/team-2.jpg' %}" alt="">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="team-item">
+                    <h5>Full Name</h5>
+                    <p class="mb-4">Designation</p>
+                    <img class="img-fluid rounded-circle w-100 mb-4" src="{% static 'img/team-3.jpg' %}" alt="">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="team-item">
+                    <h5>Full Name</h5>
+                    <p class="mb-4">Designation</p>
+                    <img class="img-fluid rounded-circle w-100 mb-4" src="{% static 'img/team-4.jpg' %}" alt="">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square text-primary bg-white m-1" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light footer pt-5 wow fadeIn" data-wow-delay="0.1s"
+     style="margin-top: 6rem;">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-white mb-4">Get In Touch</h5>
+                <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-white mb-4">Quick Link</h5>
+                <a class="btn btn-link" href="">About Us</a>
+                <a class="btn btn-link" href="">Contact Us</a>
+                <a class="btn btn-link" href="">Privacy Policy</a>
+                <a class="btn btn-link" href="">Terms & Condition</a>
+                <a class="btn btn-link" href="">Career</a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-white mb-4">Popular Link</h5>
+                <a class="btn btn-link" href="">About Us</a>
+                <a class="btn btn-link" href="">Contact Us</a>
+                <a class="btn btn-link" href="">Privacy Policy</a>
+                <a class="btn btn-link" href="">Terms & Condition</a>
+                <a class="btn btn-link" href="">Career</a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5 class="text-white mb-4">Newsletter</h5>
+                <p>Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
+                    vulpu</p>
+                <div class="position-relative w-100 mt-3">
+                    <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="text"
+                           placeholder="Your Email" style="height: 48px;">
+                    <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i
+                            class="fa fa-paper-plane text-primary fs-4"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a href="">Home</a>
+                        <a href="">Cookies</a>
+                        <a href="">Help</a>
+                        <a href="">FQAs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<script>
+
+    $("#youtube_url_form").on("submit", function (e) {
+        e.preventDefault();
+        if ($("#yt_link").val()) {
+            let link_regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+            if (!link_regex.test($("#yt_link").val())) {
+                Swal.fire({
+                    title: "Enter correct youtube url.",
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                }).then((result) => {
+                    location.reload();
+                })
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: `{{ URL }}`,
+                    data: {"yt_link": $("#yt_link").val()},
+                    success: function (data) {
+                        console.log(data.success, data.video_data.title);
+                        if (data.success) {
+                            $("#youtube_modal").append(
+                                `
+                                         <div class="downloadbox">
+                                            <div class="img-thumb">
+                                                <img class="img-responsive" src="${data.video_data.thumb}">
+                                            </div>
+                                            <div id="desl" class="v-about">
+                                                <p class="v-title">${data.video_data.title}</p>
+                                                <section class="infos">
+                                                    <li>Duration <b>${data.video_data.duration}</b></li>
+                                                    <li>Views <b>${data.video_data.views}</b></li>
+                                                    <li>Likes <b>${data.video_data.likes}</b></li>
+                                                    <li>Dislikes <b>${data.video_data.dislikes}</b</li>
+                                                </section>
+                                            </div>
+                                         </div>
+                                      `
+                            );
+
+                            data.video_data.streams.forEach((stream, i) => {
+                                $("#youtube_description").append(
+                                    `
+                                                <table>
+                                                    <tr>
+                                                        <th scope="col">Resolution</th>
+                                                        <th scope="col">File Size</th>
+                                                        <th scope="col">Extension</th>
+                                                        <th scope="col">Download</th>
+                                                    </tr>
+                                                    <tr>
+                                                      <tr>
+                                                        <td>${stream.resolution}</td>
+                                                        <td>${stream.file_size}</td>
+                                                        <td>${stream.extension}</td>
+                                                        <td><a href="${stream.video_url}" style="text-decoration: none;"
+                                                               download="${data.video_data.title}.{{ extension }}" target="_blank">Download <i
+                                                                class=" fa fa-download"></i></a></td>
+                                                      </tr>
+                                                     </tr>
+                                                 </table>
+                                            `
+                                )
+
+                            })
+
+                        }
+                    },
+                    failure: function (err) {
+                        Swal.fire({
+                            title: err,
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                });
+            }
+        }
+    })
+</script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
