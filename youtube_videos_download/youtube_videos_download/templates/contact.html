@@ -1,6 +1,10 @@
 {% extends 'index.html' %}
 {% block content %}
     <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="loader" class="lds-dual-ring hidden overlay"></div>
+        <!-- Spinner End -->
+
         <!-- Contact Start -->
         <div class="container-xxl py-6">
             <div class="container">
@@ -11,7 +15,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.3s">
                         <p class="text-center mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                        <form>
+                        <form id="contact_form" method="POST">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -48,4 +52,36 @@
         </div>
         <!-- Contact End -->
     </div>
+<script>
+
+    $("#contact_form").on("submit", function (event) {
+        $('#loader').removeClass('hidden')
+        event.preventDefault();
+        let contactPayload = {
+            "name" : $("#name").val(),
+            "email" : $("#email").val(),
+            "subject" : $("#subject").val(),
+            "message" : $("#message").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: `{{ URL }}`,
+            data: contactPayload,
+            success: function (data) {
+                $('#loader').addClass('hidden')
+                Swal.fire(data['success'])
+            },
+            failure: function (err) {
+                $('#loader').addClass('hidden')
+                Swal.fire({
+                    title: err,
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                }).then((result) => {
+                    location.reload();
+                })
+            },
+        });
+    })
+</script>
 {% endblock content %}
