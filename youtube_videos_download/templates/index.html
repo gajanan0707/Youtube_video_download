@@ -127,63 +127,52 @@
         {% endblock navbar %}
 
         {% block content %}
-        <!-- List Icons -->
-        <div class="container">
-            <div class="row hidden-md-up">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"><a href="{% url 'youtube' %}">
-                                    <img style="width: 100px;" src="{% static 'img/yt_icon.png' %}" />YouTube
-                                </a></h4>
+
+	        <div class="wrapper" style="margin-left: 40%;">
+                <a href="{% url 'youtube' %}">
+                    <div class="button">
+                        <div class="icon">
+                            <i class="fab fa-youtube"></i>
                         </div>
+                        <span>YouTube</span>
                     </div>
+                </a>
+
+                <div class="button">
+                    <div class="icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <span>Instagram</span>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"><img style="width: 66px;"
-                                    src="{% static 'img/facebook.png' %}" />&nbsp&nbsp Facebook </h4>
+
+                <div class="button">
+                    <div class="icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span>Facebook</span>
+                </div>
+
+                <div class="button">
+                    <div class="icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <span>Twitter</span>
+                </div>
+
+                <div class="button">
+                    <div class="icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <span>LinkedIn</span>
+                </div>
+                   <div class="button">
+                        <div class="icon">
+                            <i class="fab fa-github"></i>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"><img style="width: 65px;"
-                                    src="{% static 'img/instagram.png' %}" />&nbsp&nbsp Instagram </h4>
-                        </div>
-                    </div>
-                </div>
-            </div><br>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"> <img style="width: 65px;"
-                                    src="{% static 'img/linkedin.png' %}" />&nbsp&nbsp LinkedIn</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"> <img style="width: 65px;"
-                                    src="{% static 'img/twitter.png' %}" />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Twitter</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 style="text-align: center;" class="card-title"> <img style="width: 65px;"
-                                    src="{% static 'img/rizzel.png' %}" />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Rizzle</h4>
-                        </div>
-                    </div>
-                </div>
+                        <span>Github</span>
+                   </div>
             </div>
-        </div>
-        <!-- List End -->
+        </br></br>
         {% endblock %}
     </div>
 
